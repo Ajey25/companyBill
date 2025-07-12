@@ -1,0 +1,8 @@
+/* inside index.css or App.css */
+
+@media (max-width: 768px) {
+  #invoice-content {
+    transform: scale(0.7);
+    transform-origin: top left;
+  }
+}
