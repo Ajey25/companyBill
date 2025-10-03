@@ -54,14 +54,27 @@ const InvoiceForm = ({ onGenerate, initialData }) => {
 
     const filledMaterials = materialRows
       .map((row) => {
-        const mat = materials.find((m) => m.desc === row.material);
-        if (!mat || !row.qty || !row.rate) return null;
+        let mat = materials.find((m) => m.desc === row.material);
+
+        if (!row.qty || !row.rate) return null;
+
         const qty = parseFloat(row.qty);
         const rate = parseFloat(row.rate);
+
+        // ✅ Handle case where user typed a new material
+        if (!mat) {
+          mat = {
+            desc: row.material, // user-typed material
+            hsn: "", // default empty HSN
+            unit: "", // default empty unit
+          };
+        }
+
         return {
           ...mat,
           qty,
           rate,
+          hsn: "998898",
           amt: +(qty * rate).toFixed(2),
         };
       })
@@ -71,6 +84,7 @@ const InvoiceForm = ({ onGenerate, initialData }) => {
       (acc, curr) => acc + curr.amt,
       0
     );
+
     const tax = +(totalAmount * 0.09).toFixed(2); // 9% CGST + SGST each
 
     const finalData = {
@@ -139,22 +153,23 @@ const InvoiceForm = ({ onGenerate, initialData }) => {
         {materialRows.map((row, idx) => (
           <div className="row mb-2" key={idx}>
             <div className="col-4">
-              <select
-                className="form-select"
+              <input
+                list="materials"
+                className="form-control"
                 value={row.material}
                 onChange={(e) =>
                   handleMaterialChange(idx, "material", e.target.value)
                 }
+                placeholder="Select or type material"
                 required
-              >
-                <option value="">-- Select Material --</option>
+              />
+              <datalist id="materials">
                 {materials.map((m) => (
-                  <option key={m.desc} value={m.desc}>
-                    {m.desc}
-                  </option>
+                  <option key={m.desc} value={m.desc} />
                 ))}
-              </select>
+              </datalist>
             </div>
+
             <div className="col-3">
               <input
                 type="number"

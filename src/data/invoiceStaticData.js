@@ -83,4 +83,10 @@ export const materials = [
     rate: 8.0,
     per: "Nos",
   },
+{
+    desc: "E LIVER",
+    hsn: "998898",
+    rate: 7.0,
+    per: "Nos",
+  },
 ];
