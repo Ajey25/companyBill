@@ -20,6 +20,13 @@ export const consignees = [
     state: "Maharashtra",
     code: "27",
   },
+  {
+    name: "TRINITY ENGINEERS",
+    address: "Plot No.: C-230 M.I.D.C WALUJ, AURANGABAD-431136",
+    gstin: "27AACPQ2495B1ZS",
+    state: "Maharashtra",
+    code: "27",
+  },
 ];
 
 export const materials = [
